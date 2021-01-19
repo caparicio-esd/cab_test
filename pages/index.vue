@@ -1,78 +1,65 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        cab_test
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div class="w-100 mx-auto">
+    <client-only>
+      <main-scroll-controller>
+        <scroll-scene :scene="panels[0]" :controller-id="0" />
+        <scroll-scene :scene="panels[1]" :controller-id="1" />
+        <scroll-scene :scene="panels[2]" :controller-id="2" />
+        <scroll-scene :scene="panels[3]" :controller-id="3" />
+      </main-scroll-controller>
+    </client-only>
   </div>
 </template>
 
 <script>
-export default {}
+import MainScrollController from "@/components/ScrollController/MainScrollController";
+import ScrollScene from "@/components/ScrollController/ScrollScene";
+import { mapActions, mapState } from "vuex";
+
+export default {
+    components: {
+        MainScrollController,
+        ScrollScene,
+    },
+    data() {
+        return {
+            panels: [
+                {
+                    title: "panel 1",
+                    bgColor: "#29b6f6",
+                },
+                {
+                    title: "panel 2",
+                    bgColor: "#ef5350",
+                },
+                {
+                    title: "panel 3",
+                    bgColor: "#ec407a",
+                },
+                {
+                    title: "panel 4",
+                    bgColor: "#66bb6a",
+                },
+            ],
+        };
+    },
+    computed: {
+        ...mapState({
+            sections: state => state.sections.sections
+        })
+    },
+    async fetch() {
+        const sections = await fetch(
+            "https://heroku-strapi-cab.herokuapp.com/secciones"
+        )
+            .then((d) => d.json())
+            .then((d) => d);
+        this.fetchSections(sections);
+    },
+    methods: {
+        ...mapActions({
+            fetchSections: "sections/fetchSections",
+        }),
+    },
+};
 </script>
-
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>
