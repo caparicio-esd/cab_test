@@ -1,20 +1,18 @@
-# cab_test
+### Scenetypes
 
-## Build Setup
 
-```bash
-# install dependencies
-$ npm install
+#### Presentational Scene
+Es un scene-type que no tiene ningún tipo de cosa especial, simplemente muestra elementos. 
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+#### Parallax Scene
+Es un scene-type que hace effecto parallax con el background-image que lleve detrás
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+#### d3js Scene
+Animación de un d3js plot
 
-# generate static project
-$ npm run generate
-```
+#### 3d Scene
+Animación de un elemento 3d con three.js
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+#### 3d navigational Scene
+Es un scene que tiene una navegación 
+dnd en 3d
